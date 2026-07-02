@@ -1,0 +1,6 @@
+feedparser>=6.0
+python-dateutil>=2.9
+certifi
+anthropic>=0.40
+google-auth>=2.35
+google-api-python-client>=2.150
