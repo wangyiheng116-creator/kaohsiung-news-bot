@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: kaohsiung-news-mobile
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: NEWS_QUERY
+        value: 高雄 when:1d
+      - key: MAX_ITEMS
+        value: 30
