@@ -1,0 +1,30 @@
+name: 高雄新聞晨報
+
+on:
+  schedule:
+    # 07:30 台北時間（UTC+8）＝ 23:30 UTC（前一天）
+    - cron: '30 23 * * *'
+  workflow_dispatch: {}   # 讓你可以在GitHub網頁上手動點「Run workflow」測試
+
+jobs:
+  run-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安裝套件
+        run: pip install -r requirements.txt
+
+      - name: 執行高雄新聞晨報
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: python main.py
